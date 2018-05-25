@@ -1,5 +1,6 @@
-package com.kodilla.library.domain;
+package com.kodilla.library.domain.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,13 +8,15 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 import java.util.List;
 
-@Getter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
 public class LibraryUserDto {
     private Long id;
     private String name;
     private String surname;
     private Date joinedDate;
-    private List<BorrowEntry> borrowEntriesList;
+
+    @JsonIgnore
+    private List<BorrowEntryDto> borrowEntries;
 }

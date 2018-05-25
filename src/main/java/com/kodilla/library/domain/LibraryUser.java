@@ -11,10 +11,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 @Entity
 @Table(name = "LIBRARY_USERS")
 public class LibraryUser {
@@ -33,11 +32,10 @@ public class LibraryUser {
     @Column(name = "JOINED_DATE")
     private Date joinedDate;
 
-    @JsonIgnore
     @OneToMany(
             targetEntity = BorrowEntry.class,
             mappedBy = "libraryUser",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
-    private List<BorrowEntry> borrowEntriesList = new ArrayList<>();
+    private List<BorrowEntry> borrowEntries = new ArrayList<>();
 }

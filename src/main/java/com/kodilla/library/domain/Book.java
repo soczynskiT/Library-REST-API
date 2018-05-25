@@ -10,9 +10,9 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
 @Entity
 @Table(name = "BOOKS")
 public class Book {
@@ -31,11 +31,10 @@ public class Book {
     @Column(name = "PUBLICATION_YEAR")
     private int publicationYear;
 
-    @JsonIgnore
     @OneToMany(
             targetEntity = BookCopy.class,
             mappedBy = "book",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
-    private List<BookCopy> bookCopyList = new ArrayList<>();
+    private List<BookCopy> bookCopies = new ArrayList<>();
 }

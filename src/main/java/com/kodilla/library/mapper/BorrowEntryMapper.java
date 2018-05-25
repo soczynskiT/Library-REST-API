@@ -1,7 +1,7 @@
 package com.kodilla.library.mapper;
 
 import com.kodilla.library.domain.BorrowEntry;
-import com.kodilla.library.domain.BorrowEntryDto;
+import com.kodilla.library.domain.dtos.BorrowEntryDto;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -40,4 +40,17 @@ public class BorrowEntryMapper {
                         b.getBorrowStatus()))
                 .collect(Collectors.toList());
     }
+
+    public List<BorrowEntry> mapToBorrowEntryList(final List<BorrowEntryDto> borrowEntries) {
+        return borrowEntries.stream()
+                .map(b -> new BorrowEntry(
+                        b.getId(),
+                        b.getLibraryUser(),
+                        b.getBookCopy(),
+                        b.getBorrowStart(),
+                        b.getBorrowEnd(),
+                        b.getBorrowStatus()))
+                .collect(Collectors.toList());
+    }
+
 }

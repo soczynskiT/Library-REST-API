@@ -1,5 +1,7 @@
-package com.kodilla.library.domain;
+package com.kodilla.library.domain.dtos;
 
+import com.kodilla.library.domain.BookCopy;
+import com.kodilla.library.domain.LibraryUser;
 import com.kodilla.library.enums.BorrowStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

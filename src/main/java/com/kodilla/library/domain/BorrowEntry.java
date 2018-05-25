@@ -10,9 +10,10 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Date;
 
-@Getter
-@AllArgsConstructor
+
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
 @Entity
 @Table(name = "BORROW_ENTRIES")
 public class BorrowEntry {
@@ -36,7 +37,6 @@ public class BorrowEntry {
     @Column(name = "START")
     private Date borrowStart;
 
-    @NotNull
     @Column(name = "PLANNED_END")
     private LocalDate borrowEnd;
 
