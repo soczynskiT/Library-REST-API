@@ -11,15 +11,14 @@ import java.util.Optional;
 
 @Service
 public class LibraryUsersService {
-
     @Autowired
-    LibraryUserRepository libraryUserRepository;
+    private LibraryUserRepository libraryUserRepository;
 
     public LibraryUser saveLibraryUser(final LibraryUser libraryUser) {
         return libraryUserRepository.save(libraryUser);
     }
 
-    public LibraryUser getLibraryUser(Long id) throws LibraryUserNotFoundException {
+    public LibraryUser getLibraryUser(final Long id) throws LibraryUserNotFoundException {
         return libraryUserRepository.findById(id).orElseThrow(LibraryUserNotFoundException::new);
     }
 

@@ -3,7 +3,6 @@ package com.kodilla.library.service;
 import com.kodilla.library.domain.BookCopy;
 import com.kodilla.library.domain.BorrowEntry;
 import com.kodilla.library.domain.LibraryUser;
-import com.kodilla.library.domain.dtos.LibraryUserDto;
 import com.kodilla.library.enums.BookCopyStatus;
 import com.kodilla.library.enums.BorrowStatus;
 import com.kodilla.library.exceptions.BorrowEntryNotFoundException;
@@ -19,14 +18,11 @@ import java.util.List;
 @Service
 public class BorrowEntriesService {
     @Autowired
-    BorrowEntryRepository borrowEntryRepository;
+    private BorrowEntryRepository borrowEntryRepository;
     @Autowired
-    BookCopiesService bookCopiesService;
-    @Autowired
-    BooksService booksService;
+    private BookCopiesService bookCopiesService;
 
-
-    public BorrowEntry createBorrowEntry(LibraryUser libraryUser, Long bookId) throws Exception {
+    public BorrowEntry createBorrowEntry(final LibraryUser libraryUser, final Long bookId) {
 
         final List<BookCopy> availableCopies = bookCopiesService.getAllCopiesWithBookIdAndStatus(bookId, BookCopyStatus.AVAILABLE);
 
@@ -51,7 +47,7 @@ public class BorrowEntriesService {
         }
     }
 
-    public BorrowEntry returnBook(BorrowEntry borrowEntry) throws Exception {
+    public BorrowEntry returnBook(final BorrowEntry borrowEntry) {
         final BorrowEntry entryToUpdate = borrowEntryRepository.findById(borrowEntry.getId()).orElseThrow(
                 BorrowEntryNotFoundException::new);
 

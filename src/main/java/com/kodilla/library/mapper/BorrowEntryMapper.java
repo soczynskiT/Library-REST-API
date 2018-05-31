@@ -7,10 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class BorrowEntryMapper {
-
     @Autowired
     private LibraryUserMapper libraryUserMapper;
-
     @Autowired
     private BookCopyMapper bookCopyMapper;
 
