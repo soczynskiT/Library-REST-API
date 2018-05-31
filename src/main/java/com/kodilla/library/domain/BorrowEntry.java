@@ -39,7 +39,7 @@ public class BorrowEntry {
     private Date borrowStart;
 
     @Column(name = "PLANNED_END")
-    private Date borrowEnd = null;
+    private Date borrowEnd;
 
     @NotNull
     @Column(name = "STATUS")

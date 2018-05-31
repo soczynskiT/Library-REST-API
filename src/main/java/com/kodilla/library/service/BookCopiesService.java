@@ -30,11 +30,12 @@ public class BookCopiesService {
     }
 
     public List<BookCopy> getAllCopiesByBookId(final Long id) throws Exception {
-        return bookCopyRepository.findByBook_Id(id).orElseThrow(BookNotFoundException::new);
+        final Book book = booksService.getBookOfId(id);
+        return bookCopyRepository.findByBook_Id(book.getId()).orElseGet(ArrayList::new);
     }
 
     public List<BookCopy> getAllCopiesWithBookIdAndStatus(Long bookId, BookCopyStatus bookCopyStatus) throws Exception {
-        final Book book = booksService.getBookOfId(bookId); //if book of Id not exist throws handled exception
+        final Book book = booksService.getBookOfId(bookId);
         return bookCopyRepository.findByBook_IdAndStatus(bookId, bookCopyStatus).orElseGet(ArrayList::new);
     }
 }

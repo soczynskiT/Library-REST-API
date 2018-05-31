@@ -51,7 +51,7 @@ public class LibraryController {
     }
 
     @GetMapping(value = "/users/{id}")
-    public LibraryUserDto getTask(@PathVariable("id") final Long id) throws Exception {
+    public LibraryUserDto getUserWithId(@PathVariable("id") final Long id) throws Exception {
         final LibraryUser libraryUser = libraryUsersService.getLibraryUser(id);
         return libraryUserMapper.mapToLibraryUserDto(libraryUser);
     }
@@ -83,8 +83,8 @@ public class LibraryController {
         return bookMapper.mapToBookDto(createdBook);
     }
 
-    @GetMapping(value = "books/{id}/copies")
-    public List<BookCopyDto> getBookCopies(@PathVariable("id") final Long id) throws Exception {
+    @GetMapping(value = "books/{bookId}/copies")
+    public List<BookCopyDto> getBookCopies(@PathVariable("bookId") final Long id) throws Exception {
         final List<BookCopy> bookCopies = bookCopiesService.getAllCopiesByBookId(id);
         return bookCopyMapper.mapToBookCopyDtoList(bookCopies);
     }
@@ -97,12 +97,6 @@ public class LibraryController {
         return bookCopyMapper.mapToBookCopyDto(createdBookCopy);
     }
 
-    @PutMapping(value = "books/copies")
-    public BookCopyDto updateBookCopyStatus(@RequestBody final BookCopyDto bookCopyDto) {
-        final BookCopy updatedBookCopy = bookCopiesService.updateBookCopy(bookCopyMapper.mapToBookCopy(bookCopyDto));
-        return bookCopyMapper.mapToBookCopyDto(updatedBookCopy);
-    }
-
     @GetMapping(value = "books/{id}/copies/{status}")
     public List<BookCopyDto> getListOfBookCopiesWithStatus(@PathVariable("id") final Long bookId,
                                                            @PathVariable("status") final BookCopyStatus bookCopyStatus) throws Exception {
@@ -111,9 +105,9 @@ public class LibraryController {
     }
 
     @PostMapping(value = "books/{id}/borrow", consumes = APPLICATION_JSON_VALUE)
-    public BorrowEntryDto borrowBook(@RequestBody final LibraryUser libraryUser,
-                                         @PathVariable("id") final Long bookId) throws Exception {
-        final BorrowEntry newBorrowEntry = borrowEntriesService.createBorrowEntry(libraryUser, bookId);
+    public BorrowEntryDto borrowBook(@RequestBody final LibraryUserDto libraryUserDto,
+                                     @PathVariable("id") final Long bookId) throws Exception {
+        final BorrowEntry newBorrowEntry = borrowEntriesService.createBorrowEntry(libraryUserMapper.mapToLibraryUser(libraryUserDto), bookId);
         return borrowEntryMapper.mapToBorrowEntryDto(newBorrowEntry);
     }
 

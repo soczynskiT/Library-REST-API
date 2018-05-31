@@ -3,6 +3,7 @@ package com.kodilla.library.service;
 import com.kodilla.library.domain.BookCopy;
 import com.kodilla.library.domain.BorrowEntry;
 import com.kodilla.library.domain.LibraryUser;
+import com.kodilla.library.domain.dtos.LibraryUserDto;
 import com.kodilla.library.enums.BookCopyStatus;
 import com.kodilla.library.enums.BorrowStatus;
 import com.kodilla.library.exceptions.BorrowEntryNotFoundException;
@@ -28,6 +29,7 @@ public class BorrowEntriesService {
     public BorrowEntry createBorrowEntry(LibraryUser libraryUser, Long bookId) throws Exception {
 
         final List<BookCopy> availableCopies = bookCopiesService.getAllCopiesWithBookIdAndStatus(bookId, BookCopyStatus.AVAILABLE);
+
         if (availableCopies.size() > 0) {
             final BookCopy bookCopyToBorrow = availableCopies.get(0);
             final BorrowEntry newBorrowEntry = new BorrowEntry();
@@ -36,10 +38,12 @@ public class BorrowEntriesService {
             newBorrowEntry.setBorrowStart(Date.valueOf(LocalDate.now()));
             newBorrowEntry.setBorrowEnd(Date.valueOf(LocalDate.now().plusDays(20)));
             newBorrowEntry.setBorrowStatus(BorrowStatus.IN_PROGRESS);
+
             final BorrowEntry createdBorrowEntry = borrowEntryRepository.save(newBorrowEntry);
 
             bookCopyToBorrow.setStatus(BookCopyStatus.BORROWED);
             bookCopiesService.updateBookCopy(bookCopyToBorrow);
+
             return createdBorrowEntry;
 
         } else {
