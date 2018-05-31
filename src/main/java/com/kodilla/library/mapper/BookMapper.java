@@ -2,17 +2,14 @@ package com.kodilla.library.mapper;
 
 import com.kodilla.library.domain.Book;
 import com.kodilla.library.domain.dtos.BookDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class BookMapper {
-
-    @Autowired
-    BookCopyMapper bookCopyMapper;
 
     public Book mapToBook(final BookDto bookDto) {
         return new Book(
@@ -20,7 +17,7 @@ public class BookMapper {
                 bookDto.getTitle(),
                 bookDto.getAuthor(),
                 bookDto.getPublicationYear(),
-                bookCopyMapper.mapToBookCopyList(bookDto.getBookCopies()));
+                new ArrayList<>());
     }
 
     public BookDto mapToBookDto(final Book book) {
@@ -28,13 +25,12 @@ public class BookMapper {
                 book.getId(),
                 book.getTitle(),
                 book.getAuthor(),
-                book.getPublicationYear(),
-                bookCopyMapper.mapToBookCopyDtoList(book.getBookCopies()));
+                book.getPublicationYear());
     }
 
     public List<BookDto> mapToBookDtoList(final List<Book> bookList) {
         return bookList.stream()
-                .map(b -> new BookDto(b.getId(), b.getTitle(), b.getAuthor(), b.getPublicationYear(), bookCopyMapper.mapToBookCopyDtoList(b.getBookCopies())))
+                .map(b -> new BookDto(b.getId(), b.getTitle(), b.getAuthor(), b.getPublicationYear()))
                 .collect(Collectors.toList());
     }
 }

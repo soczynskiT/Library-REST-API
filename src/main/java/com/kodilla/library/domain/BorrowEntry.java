@@ -4,16 +4,17 @@ import com.kodilla.library.enums.BorrowStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.util.Date;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Entity
 @Table(name = "BORROW_ENTRIES")
 public class BorrowEntry {
@@ -38,7 +39,7 @@ public class BorrowEntry {
     private Date borrowStart;
 
     @Column(name = "PLANNED_END")
-    private LocalDate borrowEnd;
+    private Date borrowEnd = null;
 
     @NotNull
     @Column(name = "STATUS")

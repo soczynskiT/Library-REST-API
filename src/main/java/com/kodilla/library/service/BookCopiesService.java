@@ -1,13 +1,15 @@
 package com.kodilla.library.service;
 
+import com.kodilla.library.domain.Book;
 import com.kodilla.library.domain.BookCopy;
 import com.kodilla.library.enums.BookCopyStatus;
+import com.kodilla.library.exceptions.BookNotFoundException;
 import com.kodilla.library.repository.BookCopyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookCopiesService {
@@ -15,15 +17,24 @@ public class BookCopiesService {
     @Autowired
     BookCopyRepository bookCopyRepository;
 
-    public BookCopy saveBookCopy(final BookCopy bookCopy) {
+    @Autowired
+    BooksService booksService;
+
+    public BookCopy saveBookCopy(final BookCopy bookCopy, final Long bookId) throws Exception {
+        bookCopy.setBook(booksService.getBookOfId(bookId));
         return bookCopyRepository.save(bookCopy);
     }
 
-    public Optional<List<BookCopy>> getAllCopiesByBookId(final Long id) {
-        return bookCopyRepository.findByBook_Id(id);
+    public BookCopy updateBookCopy(final BookCopy bookCopy) {
+        return bookCopyRepository.save(bookCopy);
     }
 
-    public Optional<List<BookCopy>> getAllAvailableCopiesWithBookId(Long bookId, BookCopyStatus bookCopyStatus) {
-        return bookCopyRepository.findByBook_IdAndStatus(bookId, bookCopyStatus);
+    public List<BookCopy> getAllCopiesByBookId(final Long id) throws Exception {
+        return bookCopyRepository.findByBook_Id(id).orElseThrow(BookNotFoundException::new);
+    }
+
+    public List<BookCopy> getAllCopiesWithBookIdAndStatus(Long bookId, BookCopyStatus bookCopyStatus) throws Exception {
+        final Book book = booksService.getBookOfId(bookId); //if book of Id not exist throws handled exception
+        return bookCopyRepository.findByBook_IdAndStatus(bookId, bookCopyStatus).orElseGet(ArrayList::new);
     }
 }
