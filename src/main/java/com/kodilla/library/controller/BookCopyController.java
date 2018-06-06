@@ -4,7 +4,7 @@ import com.kodilla.library.domain.*;
 import com.kodilla.library.domain.dtos.BookCopyDto;
 import com.kodilla.library.enums.BookCopyStatus;
 import com.kodilla.library.mapper.BookCopyMapper;
-import com.kodilla.library.service.BookCopiesService;
+import com.kodilla.library.service.BookCopyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,11 +19,11 @@ public class BookCopyController {
     @Autowired
     private BookCopyMapper bookCopyMapper;
     @Autowired
-    private BookCopiesService bookCopiesService;
+    private BookCopyService bookCopyService;
 
     @GetMapping(value = "books/{bookId}/copies")
     public List<BookCopyDto> getBookCopies(@PathVariable("bookId") final Long id) {
-        final List<BookCopy> bookCopies = bookCopiesService.getAllCopiesByBookId(id);
+        final List<BookCopy> bookCopies = bookCopyService.getAllCopiesByBookId(id);
         return bookCopyMapper.mapToBookCopyDtoList(bookCopies);
     }
 
@@ -31,14 +31,14 @@ public class BookCopyController {
     public BookCopyDto createBookCopy(@RequestBody final BookCopyDto bookCopyDto,
                                       @PathVariable("bookId") final Long bookId) {
         final BookCopy createdBookCopy = bookCopyMapper.mapToBookCopy(bookCopyDto);
-        bookCopiesService.saveBookCopy(createdBookCopy, bookId);
+        bookCopyService.saveBookCopy(createdBookCopy, bookId);
         return bookCopyMapper.mapToBookCopyDto(createdBookCopy);
     }
 
     @GetMapping(value = "books/{id}/copies/{status}")
     public List<BookCopyDto> getListOfBookCopiesWithStatus(@PathVariable("id") final Long bookId,
                                                            @PathVariable("status") final BookCopyStatus bookCopyStatus) {
-        final List<BookCopy> requestedCopies = bookCopiesService.getAllCopiesWithBookIdAndStatus(bookId, bookCopyStatus);
+        final List<BookCopy> requestedCopies = bookCopyService.getAllCopiesWithBookIdAndStatus(bookId, bookCopyStatus);
         return bookCopyMapper.mapToBookCopyDtoList(requestedCopies);
     }
 }

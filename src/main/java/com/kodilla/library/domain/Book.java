@@ -36,4 +36,12 @@ public class Book {
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
     private List<BookCopy> bookCopies = new ArrayList<>();
+
+    //For test only
+    public Book(String title, String author, int publicationYear) {
+        this.title = title;
+        this.author = author;
+        this.publicationYear = publicationYear;
+        this.bookCopies = new ArrayList<>();
+    }
 }

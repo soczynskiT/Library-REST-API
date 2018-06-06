@@ -3,7 +3,7 @@ package com.kodilla.library.controller;
 import com.kodilla.library.domain.*;
 import com.kodilla.library.domain.dtos.BookDto;
 import com.kodilla.library.mapper.BookMapper;
-import com.kodilla.library.service.BooksService;
+import com.kodilla.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,25 +18,25 @@ public class BookController {
     @Autowired
     private BookMapper bookMapper;
     @Autowired
-    private BooksService booksService;
+    private BookService bookService;
 
     @GetMapping
     public List<BookDto> getBooks() {
-        final List<Book> books = booksService.getAllBooks();
+        final List<Book> books = bookService.getAllBooks();
         return bookMapper.mapToBookDtoList(books);
     }
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public BookDto createBook(@RequestBody final BookDto bookDto) {
         final Book createdBook = bookMapper.mapToBook(bookDto);
-        booksService.saveBook(createdBook);
-        return bookMapper.mapToBookDto(createdBook);
+        final Book savedBook = bookService.saveBook(createdBook);
+        return bookMapper.mapToBookDto(savedBook);
     }
 
     @PutMapping
     public BookDto updateBook(@RequestBody final BookDto bookDto) {
         final Book createdBook = bookMapper.mapToBook(bookDto);
-        booksService.saveBook(createdBook);
-        return bookMapper.mapToBookDto(createdBook);
+        final Book updatedBook = bookService.saveBook(createdBook);
+        return bookMapper.mapToBookDto(updatedBook);
     }
 }

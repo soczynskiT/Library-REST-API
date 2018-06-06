@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class BooksService {
+public class BookService {
     @Autowired
     private BookRepository bookRepository;
 

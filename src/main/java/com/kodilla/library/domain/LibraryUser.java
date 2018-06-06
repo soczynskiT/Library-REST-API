@@ -37,4 +37,12 @@ public class LibraryUser {
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
     private List<BorrowEntry> borrowEntries = new ArrayList<>();
+
+    //For test only
+    public LibraryUser(String name, String surname, Date joinedDate) {
+        this.name = name;
+        this.surname = surname;
+        this.joinedDate = joinedDate;
+        this.borrowEntries = new ArrayList<>();
+    }
 }

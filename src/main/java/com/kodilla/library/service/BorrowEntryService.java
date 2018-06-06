@@ -14,18 +14,21 @@ import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class BorrowEntriesService {
+public class BorrowEntryService {
     @Autowired
     private BorrowEntryRepository borrowEntryRepository;
     @Autowired
-    private BookCopiesService bookCopiesService;
+    private BookCopyService bookCopyService;
+    @Autowired
+    private LibraryUserService libraryUserService;
 
     public BorrowEntry createBorrowEntry(final LibraryUser libraryUser, final Long bookId) {
+        validateIfLibraryUserExist(libraryUser);
 
-        final List<BookCopy> availableCopies = bookCopiesService.getAllCopiesWithBookIdAndStatus(bookId, BookCopyStatus.AVAILABLE);
-
+        final List<BookCopy> availableCopies = bookCopyService.getAllCopiesWithBookIdAndStatus(bookId, BookCopyStatus.AVAILABLE);
         if (availableCopies.size() > 0) {
             final BookCopy bookCopyToBorrow = availableCopies.get(0);
             final BorrowEntry newBorrowEntry = new BorrowEntry();
@@ -38,7 +41,7 @@ public class BorrowEntriesService {
             final BorrowEntry createdBorrowEntry = borrowEntryRepository.save(newBorrowEntry);
 
             bookCopyToBorrow.setStatus(BookCopyStatus.BORROWED);
-            bookCopiesService.updateBookCopy(bookCopyToBorrow);
+            bookCopyService.updateBookCopy(bookCopyToBorrow);
 
             return createdBorrowEntry;
 
@@ -55,5 +58,10 @@ public class BorrowEntriesService {
         entryToUpdate.getBookCopy().setStatus(BookCopyStatus.AVAILABLE);
 
         return borrowEntryRepository.save(entryToUpdate);
+    }
+
+    private boolean validateIfLibraryUserExist(final LibraryUser libraryUser) {
+        final Optional<LibraryUser> userUnderCheck = Optional.ofNullable(libraryUserService.getLibraryUser(libraryUser.getId()));
+        return userUnderCheck.isPresent();
     }
 }

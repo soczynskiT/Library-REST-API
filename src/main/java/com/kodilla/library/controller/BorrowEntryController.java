@@ -5,7 +5,7 @@ import com.kodilla.library.domain.dtos.BorrowEntryDto;
 import com.kodilla.library.domain.dtos.LibraryUserDto;
 import com.kodilla.library.mapper.BorrowEntryMapper;
 import com.kodilla.library.mapper.LibraryUserMapper;
-import com.kodilla.library.service.BorrowEntriesService;
+import com.kodilla.library.service.BorrowEntryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,18 +21,18 @@ public class BorrowEntryController {
     @Autowired
     private BorrowEntryMapper borrowEntryMapper;
     @Autowired
-    private BorrowEntriesService borrowEntriesService;
+    private BorrowEntryService borrowEntryService;
 
     @PostMapping(value = "/{id}/borrow", consumes = APPLICATION_JSON_VALUE)
     public BorrowEntryDto borrowBook(@RequestBody final LibraryUserDto libraryUserDto,
                                      @PathVariable("id") final Long bookId) {
-        final BorrowEntry newBorrowEntry = borrowEntriesService.createBorrowEntry(libraryUserMapper.mapToLibraryUser(libraryUserDto), bookId);
+        final BorrowEntry newBorrowEntry = borrowEntryService.createBorrowEntry(libraryUserMapper.mapToLibraryUser(libraryUserDto), bookId);
         return borrowEntryMapper.mapToBorrowEntryDto(newBorrowEntry);
     }
 
     @PutMapping(value = "/return", consumes = APPLICATION_JSON_VALUE)
     public BorrowEntryDto returnBook(@RequestBody final BorrowEntryDto borrowEntryDto) {
-        final BorrowEntry updatedEntry = borrowEntriesService.returnBook(borrowEntryMapper.mapToBorrowEntry(borrowEntryDto));
+        final BorrowEntry updatedEntry = borrowEntryService.returnBook(borrowEntryMapper.mapToBorrowEntry(borrowEntryDto));
         return borrowEntryMapper.mapToBorrowEntryDto(updatedEntry);
     }
 }

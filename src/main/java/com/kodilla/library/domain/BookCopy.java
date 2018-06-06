@@ -37,4 +37,11 @@ public class BookCopy {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     private List<BorrowEntry> borrowEntries = new ArrayList<>();
+
+    //For test only
+    public BookCopy(Book book, BookCopyStatus status) {
+        this.book = book;
+        this.status = status;
+        this.borrowEntries = new ArrayList<>();
+    }
 }
