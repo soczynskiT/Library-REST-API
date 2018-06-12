@@ -9,7 +9,6 @@ import com.kodilla.library.service.LibraryUserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.mockito.Matchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -22,6 +21,7 @@ import java.util.*;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -50,7 +50,7 @@ public class LibraryUserControllerUnitTestSuite {
         final List<LibraryUserDto> libraryUsersDto = new ArrayList<>(Arrays.asList(libraryUserDto, libraryUser1Dto));
 
         when(libraryUserService.getAllLibraryUsers()).thenReturn(libraryUsers);
-        when(libraryUserMapper.mapToLibraryUserDtoList(libraryUsers)).thenReturn(libraryUsersDto);
+        when(libraryUserMapper.mapToLibraryUserDtoList(eq(libraryUsers))).thenReturn(libraryUsersDto);
 
         //When & Then
         mockMvc.perform(get("/v1/library/users").contentType(MediaType.APPLICATION_JSON))
@@ -65,7 +65,7 @@ public class LibraryUserControllerUnitTestSuite {
         final List<LibraryUserDto> libraryUsersDto = new ArrayList<>();
 
         when(libraryUserService.getAllLibraryUsers()).thenReturn(libraryUsers);
-        when(libraryUserMapper.mapToLibraryUserDtoList(libraryUsers)).thenReturn(libraryUsersDto);
+        when(libraryUserMapper.mapToLibraryUserDtoList(eq(libraryUsers))).thenReturn(libraryUsersDto);
 
         //When & Then
         mockMvc.perform(get("/v1/library/users").contentType(MediaType.APPLICATION_JSON))
@@ -79,8 +79,8 @@ public class LibraryUserControllerUnitTestSuite {
         final LibraryUser libraryUser = new LibraryUser(1L, "name", "surname", new Date(), new ArrayList<>());
         final LibraryUserDto libraryUserDto = new LibraryUserDto(1L, "name", "surname", new Date());
 
-        when(libraryUserService.getLibraryUser(1L)).thenReturn(libraryUser);
-        when(libraryUserMapper.mapToLibraryUserDto(libraryUser)).thenReturn(libraryUserDto);
+        when(libraryUserService.getLibraryUser(anyLong())).thenReturn(libraryUser);
+        when(libraryUserMapper.mapToLibraryUserDto(eq(libraryUser))).thenReturn(libraryUserDto);
 
         //When & Then
         mockMvc.perform(get("/v1/library/users/1").contentType(MediaType.APPLICATION_JSON))
@@ -112,9 +112,9 @@ public class LibraryUserControllerUnitTestSuite {
         final LibraryUser savedUser = new LibraryUser(1L, "name", "surname", null, new ArrayList<>());
         final LibraryUserDto savedUserDto = new LibraryUserDto(1L, "name", "surname", null);
 
-        when(libraryUserMapper.mapToLibraryUser(Matchers.any(LibraryUserDto.class))).thenReturn(createdLibraryUser);
-        when(libraryUserService.saveLibraryUser(createdLibraryUser)).thenReturn(savedUser);
-        when(libraryUserMapper.mapToLibraryUserDto(savedUser)).thenReturn(savedUserDto);
+        when(libraryUserMapper.mapToLibraryUser(eq(libraryUserDto))).thenReturn(createdLibraryUser);
+        when(libraryUserService.saveLibraryUser(eq(createdLibraryUser))).thenReturn(savedUser);
+        when(libraryUserMapper.mapToLibraryUserDto(eq(savedUser))).thenReturn(savedUserDto);
 
         final Gson gson = new Gson();
         final String jsonContent = gson.toJson(libraryUserDto);

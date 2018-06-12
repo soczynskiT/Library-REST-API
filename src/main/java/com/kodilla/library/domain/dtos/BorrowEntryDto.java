@@ -2,14 +2,14 @@ package com.kodilla.library.domain.dtos;
 
 import com.kodilla.library.enums.BorrowStatus;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@Getter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class BorrowEntryDto {
     private Long id;
     private LibraryUserDto libraryUserDto;

@@ -31,8 +31,11 @@ public class LibraryUserServiceUnitH2TestSuite {
     @Test
     public void shouldSaveLibraryUserToDb() throws ParseException {
         //Given
-        final LibraryUser libraryUser = new LibraryUser("testName", "testSurname",
-                DATE_FORMAT.parse("2000/01/01"));
+        final LibraryUser libraryUser = LibraryUser.builder()
+                .name("testName")
+                .surname("testSurname")
+                .joinedDate(DATE_FORMAT.parse("2000/01/01"))
+                .build();
 
         //When
         libraryUserService.saveLibraryUser(libraryUser);
@@ -50,8 +53,11 @@ public class LibraryUserServiceUnitH2TestSuite {
     @Test
     public void shouldReturnExistingLibraryUser() throws ParseException {
         //Given
-        final LibraryUser libraryUser = new LibraryUser("testName", "testSurname",
-                DATE_FORMAT.parse("2000/01/01"));
+        final LibraryUser libraryUser = LibraryUser.builder()
+                .name("testName")
+                .surname("testSurname")
+                .joinedDate(DATE_FORMAT.parse("2000/01/01"))
+                .build();
         libraryUserRepository.save(libraryUser);
         final Long savedUserId = libraryUser.getId();
 
@@ -78,10 +84,16 @@ public class LibraryUserServiceUnitH2TestSuite {
     @Test
     public void getAllLibraryUsers() throws ParseException {
         //Given
-        final LibraryUser libraryUser = new LibraryUser("testName", "testSurname",
-                DATE_FORMAT.parse("2000/01/01"));
-        final LibraryUser libraryUser2 = new LibraryUser("testName2", "testSurname2",
-                DATE_FORMAT.parse("2002/02/02"));
+        final LibraryUser libraryUser = LibraryUser.builder()
+                .name("testName")
+                .surname("testSurname")
+                .joinedDate(DATE_FORMAT.parse("2000/01/01"))
+                .build();
+        final LibraryUser libraryUser2 = LibraryUser.builder()
+                .name("testName2")
+                .surname("testSurname2")
+                .joinedDate(DATE_FORMAT.parse("2002/02/02"))
+                .build();
         libraryUserRepository.save(libraryUser);
         libraryUserRepository.save(libraryUser2);
 

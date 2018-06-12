@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
-    public ExceptionDto defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
+    public ExceptionDto defaultErrorHandler(final HttpServletRequest req, final Exception e) throws Exception {
         if (AnnotationUtils.findAnnotation
                 (e.getClass(), ResponseStatus.class) != null)
             throw e;

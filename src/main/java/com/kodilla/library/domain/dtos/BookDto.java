@@ -1,12 +1,12 @@
 package com.kodilla.library.domain.dtos;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 public class BookDto {
     private Long id;
     private String title;

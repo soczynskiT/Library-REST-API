@@ -32,7 +32,11 @@ public class BookCopyServiceUnitH2TestSuite {
     @Test
     public void shouldSaveBookCopyToDb() {
         //Given
-        final Book book = new Book("testTitle", "testAuthor", 999);
+        final Book book = Book.builder()
+                .title("testTitle")
+                .author("testAuthor")
+                .publicationYear(999)
+                .build();
         bookRepository.save(book);
         final BookCopy bookCopy = new BookCopy(new Book(), BookCopyStatus.LOST);
 
@@ -61,7 +65,11 @@ public class BookCopyServiceUnitH2TestSuite {
     @Test
     public void updateBookCopy() {
         //Given
-        final Book book = new Book("testTitle", "testAuthor", 999);
+        final Book book = Book.builder()
+                .title("testTitle")
+                .author("testAuthor")
+                .publicationYear(999)
+                .build();
         bookRepository.save(book);
         final BookCopy bookCopy = new BookCopy(new Book(), BookCopyStatus.LOST);
         bookCopyService.saveBookCopy(bookCopy, book.getId());
@@ -80,7 +88,11 @@ public class BookCopyServiceUnitH2TestSuite {
 
     @Test
     public void getAllCopiesByBookId() {
-        final Book book = new Book("testTitle", "testAuthor", 999);
+        final Book book = Book.builder()
+                .title("testTitle")
+                .author("testAuthor")
+                .publicationYear(999)
+                .build();
         bookRepository.save(book);
         final Long savedBookId = book.getId();
 
@@ -111,7 +123,11 @@ public class BookCopyServiceUnitH2TestSuite {
     @Test
     public void shouldReturnAllCopiesWithBookIdAndStatus() {
         //Given
-        final Book book = new Book("testTitle", "testAuthor", 999);
+        final Book book = Book.builder()
+                .title("testTitle")
+                .author("testAuthor")
+                .publicationYear(999)
+                .build();
         bookRepository.save(book);
         final Long savedBookId = book.getId();
 
@@ -142,7 +158,11 @@ public class BookCopyServiceUnitH2TestSuite {
     @Test
     public void shouldReturnEmptyListForExistingBookAndNotMatchingStatus() {
         //Given
-        final Book book = new Book("testTitle", "testAuthor", 999);
+        final Book book = Book.builder()
+                .title("testTitle")
+                .author("testAuthor")
+                .publicationYear(999)
+                .build();
         bookRepository.save(book);
         final Long savedBookId = book.getId();
 

@@ -7,10 +7,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class BorrowEntryMapper {
+    private final LibraryUserMapper libraryUserMapper;
+    private final BookCopyMapper bookCopyMapper;
+
     @Autowired
-    private LibraryUserMapper libraryUserMapper;
-    @Autowired
-    private BookCopyMapper bookCopyMapper;
+    public BorrowEntryMapper(final LibraryUserMapper libraryUserMapper, final BookCopyMapper bookCopyMapper) {
+        this.libraryUserMapper = libraryUserMapper;
+        this.bookCopyMapper = bookCopyMapper;
+    }
 
     public BorrowEntry mapToBorrowEntry(final BorrowEntryDto borrowEntryDto) {
         return new BorrowEntry(

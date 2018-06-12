@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface LibraryUserRepository extends CrudRepository<LibraryUser, Long> {
 
+    @Override
     LibraryUser save(LibraryUser libraryUser);
 
     @Override

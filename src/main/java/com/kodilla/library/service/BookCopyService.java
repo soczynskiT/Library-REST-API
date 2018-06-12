@@ -13,10 +13,14 @@ import java.util.Optional;
 
 @Service
 public class BookCopyService {
+    private final BookCopyRepository bookCopyRepository;
+    private final BookService bookService;
+
     @Autowired
-    private BookCopyRepository bookCopyRepository;
-    @Autowired
-    private BookService bookService;
+    public BookCopyService(final BookCopyRepository bookCopyRepository, final BookService bookService) {
+        this.bookCopyRepository = bookCopyRepository;
+        this.bookService = bookService;
+    }
 
     public BookCopy saveBookCopy(final BookCopy bookCopy, final Long bookId) {
         bookCopy.setBook(bookService.getBookOfId(bookId));
@@ -37,8 +41,7 @@ public class BookCopyService {
         return bookCopyRepository.findByBook_IdAndStatus(bookId, bookCopyStatus).orElseGet(ArrayList::new);
     }
 
-    private boolean validateIfBookExist(final Long bookId) {
-        final Optional<Book> bookUnderCheck = Optional.ofNullable(bookService.getBookOfId(bookId));
-        return bookUnderCheck.isPresent();
+    private void validateIfBookExist(final Long bookId) {
+        Optional.ofNullable(bookService.getBookOfId(bookId));
     }
 }

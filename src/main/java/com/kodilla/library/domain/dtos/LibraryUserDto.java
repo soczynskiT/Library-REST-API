@@ -1,14 +1,14 @@
 package com.kodilla.library.domain.dtos;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 public class LibraryUserDto {
     private Long id;
     private String name;

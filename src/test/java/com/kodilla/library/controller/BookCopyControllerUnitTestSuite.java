@@ -26,6 +26,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -53,8 +54,8 @@ public class BookCopyControllerUnitTestSuite {
         final BookCopyDto bookCopyDto1 = new BookCopyDto();
         final List<BookCopyDto> bookCopyDtoList = new ArrayList<>(Arrays.asList(bookCopyDto, bookCopyDto1));
 
-        when(bookCopyService.getAllCopiesByBookId(existingBookId)).thenReturn(bookCopies);
-        when(bookCopyMapper.mapToBookCopyDtoList(bookCopies)).thenReturn(bookCopyDtoList);
+        when(bookCopyService.getAllCopiesByBookId(eq(existingBookId))).thenReturn(bookCopies);
+        when(bookCopyMapper.mapToBookCopyDtoList(eq(bookCopies))).thenReturn(bookCopyDtoList);
 
         //When & Then
         mockMvc.perform(get("/v1/library/books/1/copies").contentType(MediaType.APPLICATION_JSON))
@@ -69,8 +70,8 @@ public class BookCopyControllerUnitTestSuite {
         final List<BookCopy> bookCopies = new ArrayList<>();
         final List<BookCopyDto> bookCopyDtoList = new ArrayList<>();
 
-        when(bookCopyService.getAllCopiesByBookId(existingBookId)).thenReturn(bookCopies);
-        when(bookCopyMapper.mapToBookCopyDtoList(bookCopies)).thenReturn(bookCopyDtoList);
+        when(bookCopyService.getAllCopiesByBookId(eq(existingBookId))).thenReturn(bookCopies);
+        when(bookCopyMapper.mapToBookCopyDtoList(eq(bookCopies))).thenReturn(bookCopyDtoList);
 
         //When & Then
         mockMvc.perform(get("/v1/library/books/1/copies").contentType(MediaType.APPLICATION_JSON))
@@ -82,7 +83,7 @@ public class BookCopyControllerUnitTestSuite {
     public void forGetBookCopiesShouldThrowBookNotFoundExceptionForNotExistingBook() throws Exception {
         //Given
         final Long notExistingBookId = -1L;
-        when(bookCopyService.getAllCopiesByBookId(notExistingBookId)).thenThrow(BookNotFoundException.class);
+        when(bookCopyService.getAllCopiesByBookId(eq(notExistingBookId))).thenThrow(BookNotFoundException.class);
 
         //When & Then
         MvcResult mvcResult = mockMvc.perform(get("/v1/library/books/-1/copies").contentType(MediaType.APPLICATION_JSON))
@@ -100,9 +101,9 @@ public class BookCopyControllerUnitTestSuite {
         final BookCopyDto bookCopyDto = new BookCopyDto(1L, BookCopyStatus.LOST);
         final BookCopy createdBookCopy = new BookCopy(1L, new Book(), BookCopyStatus.LOST, new ArrayList<>());
 
-        when(bookCopyMapper.mapToBookCopy(Matchers.any(BookCopyDto.class))).thenReturn(createdBookCopy);
-        when(bookCopyService.saveBookCopy(createdBookCopy, bookId)).thenReturn(createdBookCopy);
-        when(bookCopyMapper.mapToBookCopyDto(createdBookCopy)).thenReturn(bookCopyDto);
+        when(bookCopyMapper.mapToBookCopy(eq(bookCopyDto))).thenReturn(createdBookCopy);
+        when(bookCopyService.saveBookCopy(eq(createdBookCopy), eq(bookId))).thenReturn(createdBookCopy);
+        when(bookCopyMapper.mapToBookCopyDto(eq(createdBookCopy))).thenReturn(bookCopyDto);
 
         final Gson gson = new Gson();
         final String jsonContent = gson.toJson(bookCopyDto);
@@ -123,8 +124,8 @@ public class BookCopyControllerUnitTestSuite {
         final BookCopyDto bookCopyDto = new BookCopyDto();
         final BookCopy createdBookCopy = new BookCopy();
 
-        when(bookCopyMapper.mapToBookCopy(Matchers.any(BookCopyDto.class))).thenReturn(createdBookCopy);
-        when(bookCopyService.saveBookCopy(createdBookCopy, notExistingBookId)).thenThrow(BookNotFoundException.class);
+        when(bookCopyMapper.mapToBookCopy(eq(bookCopyDto))).thenReturn(createdBookCopy);
+        when(bookCopyService.saveBookCopy(eq(createdBookCopy), eq(notExistingBookId))).thenThrow(BookNotFoundException.class);
 
         final Gson gson = new Gson();
         final String jsonContent = gson.toJson(bookCopyDto);
@@ -153,7 +154,7 @@ public class BookCopyControllerUnitTestSuite {
 
         when(bookCopyService.getAllCopiesWithBookIdAndStatus(anyLong(), Matchers.any(BookCopyStatus.class)))
                 .thenReturn(bookCopies);
-        when(bookCopyMapper.mapToBookCopyDtoList(bookCopies)).thenReturn(bookCopyDtoList);
+        when(bookCopyMapper.mapToBookCopyDtoList(eq(bookCopies))).thenReturn(bookCopyDtoList);
 
         //When & Then
         mockMvc.perform(get("/v1/library/books/1/copies/LOST").contentType(MediaType.APPLICATION_JSON))
@@ -169,7 +170,7 @@ public class BookCopyControllerUnitTestSuite {
 
         when(bookCopyService.getAllCopiesWithBookIdAndStatus(anyLong(), Matchers.any(BookCopyStatus.class)))
                 .thenReturn(bookCopies);
-        when(bookCopyMapper.mapToBookCopyDtoList(bookCopies)).thenReturn(bookCopyDtoList);
+        when(bookCopyMapper.mapToBookCopyDtoList(eq(bookCopies))).thenReturn(bookCopyDtoList);
 
         //When & Then
         mockMvc.perform(get("/v1/library/books/1/copies/LOST").contentType(MediaType.APPLICATION_JSON))

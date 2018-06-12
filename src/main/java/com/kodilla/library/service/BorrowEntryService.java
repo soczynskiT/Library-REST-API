@@ -18,12 +18,17 @@ import java.util.Optional;
 
 @Service
 public class BorrowEntryService {
+    private final BorrowEntryRepository borrowEntryRepository;
+    private final BookCopyService bookCopyService;
+    private final LibraryUserService libraryUserService;
+
     @Autowired
-    private BorrowEntryRepository borrowEntryRepository;
-    @Autowired
-    private BookCopyService bookCopyService;
-    @Autowired
-    private LibraryUserService libraryUserService;
+    public BorrowEntryService(final BorrowEntryRepository borrowEntryRepository, final BookCopyService bookCopyService,
+                              final LibraryUserService libraryUserService) {
+        this.borrowEntryRepository = borrowEntryRepository;
+        this.bookCopyService = bookCopyService;
+        this.libraryUserService = libraryUserService;
+    }
 
     public BorrowEntry createBorrowEntry(final LibraryUser libraryUser, final Long bookId) {
         validateIfLibraryUserExist(libraryUser);
@@ -60,8 +65,7 @@ public class BorrowEntryService {
         return borrowEntryRepository.save(entryToUpdate);
     }
 
-    private boolean validateIfLibraryUserExist(final LibraryUser libraryUser) {
-        final Optional<LibraryUser> userUnderCheck = Optional.ofNullable(libraryUserService.getLibraryUser(libraryUser.getId()));
-        return userUnderCheck.isPresent();
+    private void validateIfLibraryUserExist(final LibraryUser libraryUser) {
+        Optional.ofNullable(libraryUserService.getLibraryUser(libraryUser.getId()));
     }
 }

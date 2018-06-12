@@ -39,7 +39,11 @@ public class BorrowEntryServiceUnitH2TestSuite {
     @Test
     public void createBorrowEntry() throws ParseException {
         //Given
-        final Book book = new Book("testTitle", "testAuthor", 999);
+        final Book book = Book.builder()
+                .title("testTitle")
+                .author("testAuthor")
+                .publicationYear(999)
+                .build();
         bookService.saveBook(book);
         final Long savedBookId = book.getId();
 
@@ -49,8 +53,11 @@ public class BorrowEntryServiceUnitH2TestSuite {
         bookCopyService.saveBookCopy(bookCopy2, savedBookId);
         final Long availableBookCopyId = bookCopy.getId();
 
-        final LibraryUser libraryUser = new LibraryUser("testName", "testSurname",
-                DATE_FORMAT.parse("2000/01/01"));
+        final LibraryUser libraryUser = LibraryUser.builder()
+                .name("testName")
+                .surname("testSurname")
+                .joinedDate(DATE_FORMAT.parse("2000/01/01"))
+                .build();
         libraryUserService.saveLibraryUser(libraryUser);
         final Long borrowerId = libraryUser.getId();
 
@@ -69,8 +76,11 @@ public class BorrowEntryServiceUnitH2TestSuite {
     @Test
     public void shouldThrowExceptionForBorrowTryOfNotExistingUser() throws ParseException {
         //Given
-        final LibraryUser notExistingUser = new LibraryUser("testName", "testSurname",
-                DATE_FORMAT.parse("2000/01/01"));
+        final LibraryUser notExistingUser = LibraryUser.builder()
+                .name("testName")
+                .surname("testSurname")
+                .joinedDate(DATE_FORMAT.parse("2000/01/01"))
+                .build();
 
         //When & Then
         assertThatThrownBy(() -> borrowEntryService.createBorrowEntry(notExistingUser, 1L))
@@ -80,7 +90,11 @@ public class BorrowEntryServiceUnitH2TestSuite {
     @Test
     public void shouldThrowExceptionForNoAvailableBookCopiesToBorrow() throws ParseException {
         //Given
-        final Book book = new Book("testTitle", "testAuthor", 999);
+        final Book book = Book.builder()
+                .title("testTitle")
+                .author("testAuthor")
+                .publicationYear(999)
+                .build();
         bookService.saveBook(book);
         final Long savedBookId = book.getId();
 
@@ -89,8 +103,11 @@ public class BorrowEntryServiceUnitH2TestSuite {
         bookCopyService.saveBookCopy(bookCopy, savedBookId);
         bookCopyService.saveBookCopy(bookCopy2, savedBookId);
 
-        final LibraryUser libraryUser = new LibraryUser("testName", "testSurname",
-                DATE_FORMAT.parse("2000/01/01"));
+        final LibraryUser libraryUser = LibraryUser.builder()
+                .name("testName")
+                .surname("testSurname")
+                .joinedDate(DATE_FORMAT.parse("2000/01/01"))
+                .build();
         libraryUserService.saveLibraryUser(libraryUser);
 
         //When & Then
@@ -102,7 +119,11 @@ public class BorrowEntryServiceUnitH2TestSuite {
     public void shouldProcessBookReturnOfCorrectBorrowEntry() throws ParseException {
         //Given
         //Given
-        final Book book = new Book("testTitle", "testAuthor", 999);
+        final Book book = Book.builder()
+                .title("testTitle")
+                .author("testAuthor")
+                .publicationYear(999)
+                .build();
         bookService.saveBook(book);
         final Long savedBookId = book.getId();
 
@@ -110,8 +131,11 @@ public class BorrowEntryServiceUnitH2TestSuite {
         bookCopyService.saveBookCopy(bookCopy, savedBookId);
         final Long availableBookCopyId = bookCopy.getId();
 
-        final LibraryUser libraryUser = new LibraryUser("testName", "testSurname",
-                DATE_FORMAT.parse("2000/01/01"));
+        final LibraryUser libraryUser = LibraryUser.builder()
+                .name("testName")
+                .surname("testSurname")
+                .joinedDate(DATE_FORMAT.parse("2000/01/01"))
+                .build();
         libraryUserService.saveLibraryUser(libraryUser);
         final Long borrowerId = libraryUser.getId();
 

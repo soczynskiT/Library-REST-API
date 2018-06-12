@@ -29,7 +29,11 @@ public class BookServiceUnitH2TestSuite {
     @Test
     public void shouldSaveBookToDb() {
         //Given
-        final Book book = new Book("testTitle", "testAuthor", 999);
+        final Book book = Book.builder()
+                .title("testTitle")
+                .author("testAuthor")
+                .publicationYear(999)
+                .build();
 
         //When
         bookService.saveBook(book);
@@ -48,8 +52,16 @@ public class BookServiceUnitH2TestSuite {
     @Test
     public void shouldFetchAllBooks() {
         //Given
-        final Book book = new Book("testTitle", "testAuthor", 999);
-        final Book book2 = new Book("testTitle2", "testAuthor2", 1000);
+        final Book book = Book.builder()
+                .title("testTitle")
+                .author("testAuthor")
+                .publicationYear(999)
+                .build();
+        final Book book2 = Book.builder()
+                .title("testTitle2")
+                .author("testAuthor2")
+                .publicationYear(1000)
+                .build();
         bookRepository.save(book);
         bookRepository.save(book2);
 
@@ -72,7 +84,11 @@ public class BookServiceUnitH2TestSuite {
     @Test
     public void shouldReturnBookOfRequestedId() {
         //Given
-        final Book book = new Book("testTitle", "testAuthor", 999);
+        final Book book = Book.builder()
+                .title("testTitle")
+                .author("testAuthor")
+                .publicationYear(999)
+                .build();
         bookRepository.save(book);
         final Long bookId = book.getId();
 

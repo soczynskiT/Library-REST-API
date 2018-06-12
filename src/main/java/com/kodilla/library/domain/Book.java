@@ -1,17 +1,16 @@
 package com.kodilla.library.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
+@Data
+@Builder
 @AllArgsConstructor
-@Getter
+@NoArgsConstructor
 @Entity
 @Table(name = "BOOKS")
 public class Book {
@@ -36,12 +35,4 @@ public class Book {
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
     private List<BookCopy> bookCopies = new ArrayList<>();
-
-    //For test only
-    public Book(String title, String author, int publicationYear) {
-        this.title = title;
-        this.author = author;
-        this.publicationYear = publicationYear;
-        this.bookCopies = new ArrayList<>();
-    }
 }

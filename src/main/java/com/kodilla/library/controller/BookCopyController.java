@@ -16,10 +16,14 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping("/v1/library")
 public class BookCopyController {
+    private final BookCopyMapper bookCopyMapper;
+    private final BookCopyService bookCopyService;
+
     @Autowired
-    private BookCopyMapper bookCopyMapper;
-    @Autowired
-    private BookCopyService bookCopyService;
+    public BookCopyController(final BookCopyMapper bookCopyMapper, final BookCopyService bookCopyService) {
+        this.bookCopyMapper = bookCopyMapper;
+        this.bookCopyService = bookCopyService;
+    }
 
     @GetMapping(value = "books/{bookId}/copies")
     public List<BookCopyDto> getBookCopies(@PathVariable("bookId") final Long id) {

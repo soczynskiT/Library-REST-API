@@ -16,12 +16,17 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @RequestMapping("/v1/library/books")
 public class BorrowEntryController {
 
+    private final LibraryUserMapper libraryUserMapper;
+    private final BorrowEntryMapper borrowEntryMapper;
+    private final BorrowEntryService borrowEntryService;
+
     @Autowired
-    private LibraryUserMapper libraryUserMapper;
-    @Autowired
-    private BorrowEntryMapper borrowEntryMapper;
-    @Autowired
-    private BorrowEntryService borrowEntryService;
+    public BorrowEntryController(final LibraryUserMapper libraryUserMapper, final BorrowEntryMapper borrowEntryMapper,
+                                 final BorrowEntryService borrowEntryService) {
+        this.libraryUserMapper = libraryUserMapper;
+        this.borrowEntryMapper = borrowEntryMapper;
+        this.borrowEntryService = borrowEntryService;
+    }
 
     @PostMapping(value = "/{id}/borrow", consumes = APPLICATION_JSON_VALUE)
     public BorrowEntryDto borrowBook(@RequestBody final LibraryUserDto libraryUserDto,

@@ -16,10 +16,14 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @RequestMapping("/v1/library/users")
 public class LibraryUserController {
 
+    private final LibraryUserMapper libraryUserMapper;
+    private final LibraryUserService libraryUserService;
+
     @Autowired
-    private LibraryUserMapper libraryUserMapper;
-    @Autowired
-    private LibraryUserService libraryUserService;
+    public LibraryUserController(final LibraryUserMapper libraryUserMapper, final LibraryUserService libraryUserService) {
+        this.libraryUserMapper = libraryUserMapper;
+        this.libraryUserService = libraryUserService;
+    }
 
     @GetMapping
     public List<LibraryUserDto> getLibraryUsers() {

@@ -7,7 +7,6 @@ import com.kodilla.library.mapper.BookMapper;
 import com.kodilla.library.service.BookService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -20,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -47,7 +47,7 @@ public class BookControllerUnitTestSuite {
         final List<BookDto> bookDtoList = new ArrayList<>(Arrays.asList(bookDto, bookDto1));
 
         when(bookService.getAllBooks()).thenReturn(books);
-        when(bookMapper.mapToBookDtoList(books)).thenReturn(bookDtoList);
+        when(bookMapper.mapToBookDtoList(eq(books))).thenReturn(bookDtoList);
 
         //When & Then
         mockMvc.perform(get("/v1/library/books").contentType(MediaType.APPLICATION_JSON))
@@ -62,7 +62,7 @@ public class BookControllerUnitTestSuite {
         final List<BookDto> bookDtoList = new ArrayList<>();
 
         when(bookService.getAllBooks()).thenReturn(books);
-        when(bookMapper.mapToBookDtoList(books)).thenReturn(bookDtoList);
+        when(bookMapper.mapToBookDtoList(eq(books))).thenReturn(bookDtoList);
 
         //When & Then
         mockMvc.perform(get("/v1/library/books").contentType(MediaType.APPLICATION_JSON))
@@ -78,9 +78,9 @@ public class BookControllerUnitTestSuite {
         final Book savedBook = new Book(1L, "title", "name", 1999, new ArrayList<>());
         final BookDto savedBookDto = new BookDto(1L, "title", "name", 1999);
 
-        when(bookMapper.mapToBook(Matchers.any(BookDto.class))).thenReturn(createdBook);
-        when(bookService.saveBook(createdBook)).thenReturn(savedBook);
-        when(bookMapper.mapToBookDto(savedBook)).thenReturn(savedBookDto);
+        when(bookMapper.mapToBook(eq(bookDto))).thenReturn(createdBook);
+        when(bookService.saveBook(eq(createdBook))).thenReturn(savedBook);
+        when(bookMapper.mapToBookDto(eq(savedBook))).thenReturn(savedBookDto);
 
         final Gson gson = new Gson();
         final String jsonContent = gson.toJson(bookDto);
@@ -104,9 +104,9 @@ public class BookControllerUnitTestSuite {
         final Book updatedBook = new Book(1L, "title", "name", 1999, new ArrayList<>());
         final BookDto updatedBookDto = new BookDto(1L, "title", "name", 1999);
 
-        when(bookMapper.mapToBook(Matchers.any(BookDto.class))).thenReturn(createdBook);
-        when(bookService.saveBook(createdBook)).thenReturn(updatedBook);
-        when(bookMapper.mapToBookDto(updatedBook)).thenReturn(updatedBookDto);
+        when(bookMapper.mapToBook(eq(bookDto))).thenReturn(createdBook);
+        when(bookService.saveBook(eq(createdBook))).thenReturn(updatedBook);
+        when(bookMapper.mapToBookDto(eq(updatedBook))).thenReturn(updatedBookDto);
 
         final Gson gson = new Gson();
         final String jsonContent = gson.toJson(bookDto);

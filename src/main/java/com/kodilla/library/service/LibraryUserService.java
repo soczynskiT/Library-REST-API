@@ -7,12 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class LibraryUserService {
+    private final LibraryUserRepository libraryUserRepository;
+
     @Autowired
-    private LibraryUserRepository libraryUserRepository;
+    public LibraryUserService(final LibraryUserRepository libraryUserRepository) {
+        this.libraryUserRepository = libraryUserRepository;
+    }
 
     public LibraryUser saveLibraryUser(final LibraryUser libraryUser) {
         return libraryUserRepository.save(libraryUser);

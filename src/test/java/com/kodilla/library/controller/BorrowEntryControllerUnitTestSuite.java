@@ -27,7 +27,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -56,9 +56,9 @@ public class BorrowEntryControllerUnitTestSuite {
         final BorrowEntryDto borrowEntryDto = new BorrowEntryDto(1L, new LibraryUserDto(), new BookCopyDto(),
                 null, null, BorrowStatus.IN_PROGRESS);
 
-        when(libraryUserMapper.mapToLibraryUser(Matchers.any(LibraryUserDto.class))).thenReturn(libraryUser);
-        when(borrowEntryService.createBorrowEntry(libraryUser, existingBookId)).thenReturn(borrowEntry);
-        when(borrowEntryMapper.mapToBorrowEntryDto(Matchers.any(BorrowEntry.class))).thenReturn(borrowEntryDto);
+        when(libraryUserMapper.mapToLibraryUser(eq(libraryUserDto))).thenReturn(libraryUser);
+        when(borrowEntryService.createBorrowEntry(eq(libraryUser), eq(existingBookId))).thenReturn(borrowEntry);
+        when(borrowEntryMapper.mapToBorrowEntryDto(eq(borrowEntry))).thenReturn(borrowEntryDto);
 
         final Gson gson = new Gson();
         final String jsonContent = gson.toJson(libraryUserDto);
@@ -82,7 +82,7 @@ public class BorrowEntryControllerUnitTestSuite {
         final LibraryUserDto notExistingUserDto = new LibraryUserDto();
 
         when(libraryUserMapper.mapToLibraryUser(Matchers.any(LibraryUserDto.class))).thenReturn(notExistingUser);
-        when(borrowEntryService.createBorrowEntry(notExistingUser, existingBookId))
+        when(borrowEntryService.createBorrowEntry(eq(notExistingUser), eq(existingBookId)))
                 .thenThrow(LibraryUserNotFoundException.class);
 
         final Gson gson = new Gson();
@@ -106,8 +106,8 @@ public class BorrowEntryControllerUnitTestSuite {
         final LibraryUser libraryUser = new LibraryUser();
         final LibraryUserDto libraryUserDto = new LibraryUserDto();
 
-        when(libraryUserMapper.mapToLibraryUser(Matchers.any(LibraryUserDto.class))).thenReturn(libraryUser);
-        when(borrowEntryService.createBorrowEntry(libraryUser, existingBookId))
+        when(libraryUserMapper.mapToLibraryUser(eq(libraryUserDto))).thenReturn(libraryUser);
+        when(borrowEntryService.createBorrowEntry(eq(libraryUser), eq(existingBookId)))
                 .thenThrow(NoAvailableCopiesFoundedException.class);
 
         final Gson gson = new Gson();
@@ -136,9 +136,9 @@ public class BorrowEntryControllerUnitTestSuite {
         final BorrowEntryDto updatedEntryDto = new BorrowEntryDto(1L, new LibraryUserDto(), new BookCopyDto(),
                 null, null, BorrowStatus.FINISHED);
 
-        when(borrowEntryMapper.mapToBorrowEntry(Matchers.any(BorrowEntryDto.class))).thenReturn(borrowEntry);
-        when(borrowEntryService.returnBook(borrowEntry)).thenReturn(updatedEntry);
-        when(borrowEntryMapper.mapToBorrowEntryDto(updatedEntry)).thenReturn(updatedEntryDto);
+        when(borrowEntryMapper.mapToBorrowEntry(eq(borrowEntryDto))).thenReturn(borrowEntry);
+        when(borrowEntryService.returnBook(eq(borrowEntry))).thenReturn(updatedEntry);
+        when(borrowEntryMapper.mapToBorrowEntryDto(eq(updatedEntry))).thenReturn(updatedEntryDto);
 
         final Gson gson = new Gson();
         final String jsonContent = gson.toJson(borrowEntryDto);
@@ -162,8 +162,8 @@ public class BorrowEntryControllerUnitTestSuite {
         final BorrowEntry notExistingEntry = new BorrowEntry(1L, new LibraryUser(), new BookCopy(),
                 null, null, BorrowStatus.IN_PROGRESS);
 
-        when(borrowEntryMapper.mapToBorrowEntry(Matchers.any(BorrowEntryDto.class))).thenReturn(notExistingEntry);
-        when(borrowEntryService.returnBook(notExistingEntry)).thenThrow(BorrowEntryNotFoundException.class);
+        when(borrowEntryMapper.mapToBorrowEntry(eq(notExistingEntryDto))).thenReturn(notExistingEntry);
+        when(borrowEntryService.returnBook(eq(notExistingEntry))).thenThrow(BorrowEntryNotFoundException.class);
 
         final Gson gson = new Gson();
         final String jsonContent = gson.toJson(notExistingEntryDto);

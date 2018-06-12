@@ -15,10 +15,14 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping("/v1/library/books")
 public class BookController {
+    private final BookMapper bookMapper;
+    private final BookService bookService;
+
     @Autowired
-    private BookMapper bookMapper;
-    @Autowired
-    private BookService bookService;
+    public BookController(final BookMapper bookMapper, final BookService bookService) {
+        this.bookMapper = bookMapper;
+        this.bookService = bookService;
+    }
 
     @GetMapping
     public List<BookDto> getBooks() {
