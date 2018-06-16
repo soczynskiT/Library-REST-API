@@ -4,25 +4,20 @@ import com.kodilla.library.domain.*;
 import com.kodilla.library.domain.dtos.BookDto;
 import com.kodilla.library.mapper.BookMapper;
 import com.kodilla.library.service.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
+@RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/v1/library/books")
 public class BookController {
     private final BookMapper bookMapper;
     private final BookService bookService;
-
-    @Autowired
-    public BookController(final BookMapper bookMapper, final BookService bookService) {
-        this.bookMapper = bookMapper;
-        this.bookService = bookService;
-    }
 
     @GetMapping
     public List<BookDto> getBooks() {

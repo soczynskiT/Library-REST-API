@@ -46,9 +46,14 @@ public class BorrowEntryServiceUnitH2TestSuite {
                 .build();
         bookService.saveBook(book);
         final Long savedBookId = book.getId();
-
-        final BookCopy bookCopy = new BookCopy(new Book(), BookCopyStatus.AVAILABLE);
-        final BookCopy bookCopy2 = new BookCopy(new Book(), BookCopyStatus.LOST);
+        final BookCopy bookCopy = BookCopy.builder()
+                .book(new Book())
+                .status(BookCopyStatus.AVAILABLE)
+                .build();
+        final BookCopy bookCopy2 = BookCopy.builder()
+                .book(new Book())
+                .status(BookCopyStatus.LOST)
+                .build();
         bookCopyService.saveBookCopy(bookCopy, savedBookId);
         bookCopyService.saveBookCopy(bookCopy2, savedBookId);
         final Long availableBookCopyId = bookCopy.getId();
@@ -97,9 +102,14 @@ public class BorrowEntryServiceUnitH2TestSuite {
                 .build();
         bookService.saveBook(book);
         final Long savedBookId = book.getId();
-
-        final BookCopy bookCopy = new BookCopy(new Book(), BookCopyStatus.LOST);
-        final BookCopy bookCopy2 = new BookCopy(new Book(), BookCopyStatus.LOST);
+        final BookCopy bookCopy = BookCopy.builder()
+                .book(new Book())
+                .status(BookCopyStatus.LOST)
+                .build();
+        final BookCopy bookCopy2 = BookCopy.builder()
+                .book(new Book())
+                .status(BookCopyStatus.LOST)
+                .build();
         bookCopyService.saveBookCopy(bookCopy, savedBookId);
         bookCopyService.saveBookCopy(bookCopy2, savedBookId);
 
@@ -126,8 +136,10 @@ public class BorrowEntryServiceUnitH2TestSuite {
                 .build();
         bookService.saveBook(book);
         final Long savedBookId = book.getId();
-
-        final BookCopy bookCopy = new BookCopy(new Book(), BookCopyStatus.AVAILABLE);
+        final BookCopy bookCopy = BookCopy.builder()
+                .book(new Book())
+                .status(BookCopyStatus.AVAILABLE)
+                .build();
         bookCopyService.saveBookCopy(bookCopy, savedBookId);
         final Long availableBookCopyId = bookCopy.getId();
 

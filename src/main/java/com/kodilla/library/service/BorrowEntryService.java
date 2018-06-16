@@ -8,7 +8,7 @@ import com.kodilla.library.enums.BorrowStatus;
 import com.kodilla.library.exceptions.BorrowEntryNotFoundException;
 import com.kodilla.library.exceptions.NoAvailableCopiesFoundedException;
 import com.kodilla.library.repository.BorrowEntryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -16,19 +16,12 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class BorrowEntryService {
     private final BorrowEntryRepository borrowEntryRepository;
     private final BookCopyService bookCopyService;
     private final LibraryUserService libraryUserService;
-
-    @Autowired
-    public BorrowEntryService(final BorrowEntryRepository borrowEntryRepository, final BookCopyService bookCopyService,
-                              final LibraryUserService libraryUserService) {
-        this.borrowEntryRepository = borrowEntryRepository;
-        this.bookCopyService = bookCopyService;
-        this.libraryUserService = libraryUserService;
-    }
 
     public BorrowEntry createBorrowEntry(final LibraryUser libraryUser, final Long bookId) {
         validateIfLibraryUserExist(libraryUser);

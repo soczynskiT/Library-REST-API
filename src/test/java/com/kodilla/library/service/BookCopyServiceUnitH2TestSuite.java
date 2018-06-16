@@ -38,7 +38,10 @@ public class BookCopyServiceUnitH2TestSuite {
                 .publicationYear(999)
                 .build();
         bookRepository.save(book);
-        final BookCopy bookCopy = new BookCopy(new Book(), BookCopyStatus.LOST);
+        final BookCopy bookCopy = BookCopy.builder()
+                .book(new Book())
+                .status(BookCopyStatus.LOST)
+                .build();
 
         //When
         bookCopyService.saveBookCopy(bookCopy, book.getId());
@@ -54,7 +57,10 @@ public class BookCopyServiceUnitH2TestSuite {
     @Test
     public void shouldThrowBookNotFoundExceptionForSavingCopyOfNotExistingBook() {
         //Given
-        final BookCopy bookCopy = new BookCopy(new Book(), BookCopyStatus.LOST);
+        final BookCopy bookCopy = BookCopy.builder()
+                .book(new Book())
+                .status(BookCopyStatus.LOST)
+                .build();
         final Long notExistingBookId = (long) -1;
 
         //When & Then
@@ -71,7 +77,10 @@ public class BookCopyServiceUnitH2TestSuite {
                 .publicationYear(999)
                 .build();
         bookRepository.save(book);
-        final BookCopy bookCopy = new BookCopy(new Book(), BookCopyStatus.LOST);
+        final BookCopy bookCopy = BookCopy.builder()
+                .book(new Book())
+                .status(BookCopyStatus.LOST)
+                .build();
         bookCopyService.saveBookCopy(bookCopy, book.getId());
 
         final Long bookCopyId = bookCopy.getId();
@@ -95,10 +104,18 @@ public class BookCopyServiceUnitH2TestSuite {
                 .build();
         bookRepository.save(book);
         final Long savedBookId = book.getId();
-
-        final BookCopy bookCopy = new BookCopy(new Book(), BookCopyStatus.LOST);
-        final BookCopy bookCopy2 = new BookCopy(new Book(), BookCopyStatus.AVAILABLE);
-        final BookCopy bookCopy3 = new BookCopy(new Book(), BookCopyStatus.DESTROYED);
+        final BookCopy bookCopy = BookCopy.builder()
+                .book(new Book())
+                .status(BookCopyStatus.LOST)
+                .build();
+        final BookCopy bookCopy2 = BookCopy.builder()
+                .book(new Book())
+                .status(BookCopyStatus.AVAILABLE)
+                .build();
+        final BookCopy bookCopy3 = BookCopy.builder()
+                .book(new Book())
+                .status(BookCopyStatus.DESTROYED)
+                .build();
         bookCopyService.saveBookCopy(bookCopy, savedBookId);
         bookCopyService.saveBookCopy(bookCopy2, savedBookId);
         bookCopyService.saveBookCopy(bookCopy3, savedBookId);
@@ -130,10 +147,18 @@ public class BookCopyServiceUnitH2TestSuite {
                 .build();
         bookRepository.save(book);
         final Long savedBookId = book.getId();
-
-        final BookCopy bookCopy = new BookCopy(new Book(), BookCopyStatus.LOST);
-        final BookCopy bookCopy2 = new BookCopy(new Book(), BookCopyStatus.LOST);
-        final BookCopy bookCopy3 = new BookCopy(new Book(), BookCopyStatus.DESTROYED);
+        final BookCopy bookCopy = BookCopy.builder()
+                .book(new Book())
+                .status(BookCopyStatus.LOST)
+                .build();
+        final BookCopy bookCopy2 = BookCopy.builder()
+                .book(new Book())
+                .status(BookCopyStatus.AVAILABLE)
+                .build();
+        final BookCopy bookCopy3 = BookCopy.builder()
+                .book(new Book())
+                .status(BookCopyStatus.LOST)
+                .build();
         bookCopyService.saveBookCopy(bookCopy, savedBookId);
         bookCopyService.saveBookCopy(bookCopy2, savedBookId);
         bookCopyService.saveBookCopy(bookCopy3, savedBookId);
@@ -165,10 +190,18 @@ public class BookCopyServiceUnitH2TestSuite {
                 .build();
         bookRepository.save(book);
         final Long savedBookId = book.getId();
-
-        final BookCopy bookCopy = new BookCopy(new Book(), BookCopyStatus.LOST);
-        final BookCopy bookCopy2 = new BookCopy(new Book(), BookCopyStatus.AVAILABLE);
-        final BookCopy bookCopy3 = new BookCopy(new Book(), BookCopyStatus.DESTROYED);
+        final BookCopy bookCopy = BookCopy.builder()
+                .book(new Book())
+                .status(BookCopyStatus.LOST)
+                .build();
+        final BookCopy bookCopy2 = BookCopy.builder()
+                .book(new Book())
+                .status(BookCopyStatus.AVAILABLE)
+                .build();
+        final BookCopy bookCopy3 = BookCopy.builder()
+                .book(new Book())
+                .status(BookCopyStatus.DESTROYED)
+                .build();
         bookCopyService.saveBookCopy(bookCopy, savedBookId);
         bookCopyService.saveBookCopy(bookCopy2, savedBookId);
         bookCopyService.saveBookCopy(bookCopy3, savedBookId);

@@ -2,19 +2,14 @@ package com.kodilla.library.mapper;
 
 import com.kodilla.library.domain.BorrowEntry;
 import com.kodilla.library.domain.dtos.BorrowEntryDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+@RequiredArgsConstructor
 @Component
 public class BorrowEntryMapper {
     private final LibraryUserMapper libraryUserMapper;
     private final BookCopyMapper bookCopyMapper;
-
-    @Autowired
-    public BorrowEntryMapper(final LibraryUserMapper libraryUserMapper, final BookCopyMapper bookCopyMapper) {
-        this.libraryUserMapper = libraryUserMapper;
-        this.bookCopyMapper = bookCopyMapper;
-    }
 
     public BorrowEntry mapToBorrowEntry(final BorrowEntryDto borrowEntryDto) {
         return new BorrowEntry(

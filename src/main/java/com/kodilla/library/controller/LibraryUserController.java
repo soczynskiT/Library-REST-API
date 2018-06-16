@@ -4,26 +4,20 @@ import com.kodilla.library.domain.*;
 import com.kodilla.library.domain.dtos.LibraryUserDto;
 import com.kodilla.library.mapper.LibraryUserMapper;
 import com.kodilla.library.service.LibraryUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
+@RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/v1/library/users")
 public class LibraryUserController {
-
     private final LibraryUserMapper libraryUserMapper;
     private final LibraryUserService libraryUserService;
-
-    @Autowired
-    public LibraryUserController(final LibraryUserMapper libraryUserMapper, final LibraryUserService libraryUserService) {
-        this.libraryUserMapper = libraryUserMapper;
-        this.libraryUserService = libraryUserService;
-    }
 
     @GetMapping
     public List<LibraryUserDto> getLibraryUsers() {

@@ -5,25 +5,20 @@ import com.kodilla.library.domain.dtos.BookCopyDto;
 import com.kodilla.library.enums.BookCopyStatus;
 import com.kodilla.library.mapper.BookCopyMapper;
 import com.kodilla.library.service.BookCopyService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
+@RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/v1/library")
 public class BookCopyController {
     private final BookCopyMapper bookCopyMapper;
     private final BookCopyService bookCopyService;
-
-    @Autowired
-    public BookCopyController(final BookCopyMapper bookCopyMapper, final BookCopyService bookCopyService) {
-        this.bookCopyMapper = bookCopyMapper;
-        this.bookCopyService = bookCopyService;
-    }
 
     @GetMapping(value = "books/{bookId}/copies")
     public List<BookCopyDto> getBookCopies(@PathVariable("bookId") final Long id) {
